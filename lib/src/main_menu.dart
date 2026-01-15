@@ -6,9 +6,19 @@ class MainMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = context.scrnHeight;
-    final screenWidth = context.scrnWidth;
+    final bool isLandscape = context.scrnIsLandscape;
 
-    return Scaffold(body: Center(child: Text('Hello World!')));
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: isLandscape
+            ? Colors.green
+            : Color.fromARGB(156, 80, 99, 255),
+        child: context.scrnIsLandscape
+            ? Text('LANDSCAPE', style: TextStyle(fontSize: 9))
+            : Text('PORTRAIT', style: TextStyle(fontSize: 9)),
+        onPressed: () {},
+      ),
+      body: Center(child: Text('Hello World.')),
+    );
   }
 }

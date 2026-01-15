@@ -18,4 +18,18 @@ extension ContextScreenSize on BuildContext {
   // double get scrnTextScale => MediaQuery.textScaleFactorOf(this);
 
   // TextScaler get scrnTextScaler => MediaQuery.textScalerOf(this);
+
+    /// Aspect ratio for the current orientation (width / height).
+  double get scrnAspectRatio => scrnWidth / scrnHeight;
+
+  /// Orientation-agnostic ratio (always >= 1). Useful for classification.
+  double get scrnAspectRatioNormalized {
+    final w = scrnWidth;
+    final h = scrnHeight;
+    return (w >= h) ? (w / h) : (h / w);
+  }
+
+  /// True if currently in landscape.
+  bool get scrnIsLandscape => scrnWidth >= scrnHeight;
+  
 }
