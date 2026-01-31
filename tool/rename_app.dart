@@ -541,3 +541,5 @@ Examples:
 	dart run tool/rename_app.dart --developer grace64 --app notes --dry-run
 	dart run tool/rename_app.dart --developer grace64 --app notes --display-name "Shadow Notes"
 ''';
+
+// pubspec.yaml "description" remains unchanged by this tool //
