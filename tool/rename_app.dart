@@ -298,7 +298,7 @@ String? _validateInputs({
   required String dartPackage,
   required String displayName,
 }) {
-  final segment = RegExp(r'^[a-z][a-z0-9]*$');
+  final segment = RegExp(r'^[a-z][a-z0-9_]*$');
   if (!segment.hasMatch(developer)) {
     return '--developer must be lowercase letters+digits and start with a letter (example: grace64).';
   }
