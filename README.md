@@ -1,5 +1,15 @@
 # ShadowApp Template
 
+<!--  -->
+<!--  -->
+<!--  -->
+
+TL;DR - see tool/rename_app.dart at the bottom of the file for instructions
+
+<!--  -->
+<!--  -->
+<!--  -->
+
 Use this repository as a **GitHub Template Repository** to create new Flutter apps that start from this codebase.
 
 ## Create a new app from this template
@@ -31,7 +41,6 @@ This repo includes a renaming tool that updates all the important identifiers ac
 From the repository root:
 
 1. Dry run first:
-
    - `dart run tool/rename_app.dart --developer <developerName> --app <appName> --dry-run`
 
 2. Apply changes:
