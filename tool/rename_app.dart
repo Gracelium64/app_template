@@ -544,3 +544,4 @@ Examples:
 
           // "description" in pubspec.yaml doesn't change with this, change meunally //
           // also "title" in app.dart //
+          // also "meta name="apple-mobile-web-app-title" content" in web/index.html //
