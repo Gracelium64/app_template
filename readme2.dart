@@ -1,5 +1,27 @@
 /*
 
+“Copilot agent” prompt to initiate required installs
+If anything fails at flutter doctor, the agent should propose the minimal fix and re-run flutter doctor.
+Paste this into your GitHub Copilot agent:
+
+You are setting up a Flutter dev environment on a macOS MacBook for this workspace (Flutter app with entrypoint main.dart).
+Goal: run debug in VS Code on Android Emulator, iPhone Simulator, and Web (Chrome).
+Use Homebrew where appropriate.
+Do the following:
+
+Check/install prerequisites: xcode-select, Xcode CLI tools, Git, Homebrew.
+Install: Flutter SDK (stable), VS Code extensions (Flutter/Dart), Google Chrome, CocoaPods, Android Studio.
+Configure: add Flutter to PATH (zsh), run flutter doctor, fix all doctor issues; run flutter doctor --android-licenses; enable web via flutter config --enable-web.
+Android: ensure Android SDK + platform-tools + emulator + an AVD exist; show commands to list/launch emulators.
+iOS: ensure Xcode license accepted, Simulator runs, CocoaPods installed; verify flutter doctor iOS section is green.
+Project: run flutter clean and flutter pub get in repo root.
+Provide final “how to debug” commands and VS Code steps for: Android (flutter run -d ...), iOS simulator (flutter run -d "iPhone ...") and web (flutter run -d chrome).
+Output a concise checklist + exact terminal commands.
+
+*/
+
+/*
+
 What you need installed (macOS + VS Code)
 Required
 * Flutter SDK (includes Dart)
@@ -133,28 +155,5 @@ If Flutter isn’t auto-detected:
 
 VS Code Settings → search Flutter SDK Path
 set dart.flutterSdkPath to your Flutter folder (e.g. ~/development/flutter)
-
-*/
-
-
-/*
-
-“Copilot agent” prompt to initiate required installs
-If anything fails at flutter doctor, the agent should propose the minimal fix and re-run flutter doctor.
-Paste this into your GitHub Copilot agent:
-
-You are setting up a Flutter dev environment on a macOS MacBook for this workspace (Flutter app with entrypoint main.dart).
-Goal: run debug in VS Code on Android Emulator, iPhone Simulator, and Web (Chrome).
-Use Homebrew where appropriate.
-Do the following:
-
-Check/install prerequisites: xcode-select, Xcode CLI tools, Git, Homebrew.
-Install: Flutter SDK (stable), VS Code extensions (Flutter/Dart), Google Chrome, CocoaPods, Android Studio.
-Configure: add Flutter to PATH (zsh), run flutter doctor, fix all doctor issues; run flutter doctor --android-licenses; enable web via flutter config --enable-web.
-Android: ensure Android SDK + platform-tools + emulator + an AVD exist; show commands to list/launch emulators.
-iOS: ensure Xcode license accepted, Simulator runs, CocoaPods installed; verify flutter doctor iOS section is green.
-Project: run flutter clean and flutter pub get in repo root.
-Provide final “how to debug” commands and VS Code steps for: Android (flutter run -d ...), iOS simulator (flutter run -d "iPhone ...") and web (flutter run -d chrome).
-Output a concise checklist + exact terminal commands.
 
 */
