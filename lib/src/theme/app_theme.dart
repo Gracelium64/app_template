@@ -1,4 +1,4 @@
-import 'package:app_template/src/theme/palette.dart';
+import 'package:test_app/src/theme/palette.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppTheme {

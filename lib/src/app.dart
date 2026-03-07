@@ -1,7 +1,7 @@
-import 'package:app_template/src/theme/app_theme.dart';
+import 'package:test_app/src/theme/app_theme.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:app_template/src/main_menu.dart';
+import 'package:test_app/src/main_menu.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -9,6 +9,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Test App",
       locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
       debugShowCheckedModeBanner: false,

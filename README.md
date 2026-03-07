@@ -4,7 +4,28 @@
 <!--  -->
 <!--  -->
 
-TL;DR - see tool/rename_app.dart at the bottom of the file for instructions
+TL;DR:
+ShadowApp renamer
+
+Usage:
+dart run tool/rename_app.dart --developer <developerName> --app <appName> [options]
+
+Standard bundle/application id scheme:
+shadowapp.<developerName>.<appName>
+
+Required:
+--developer Lowercase letters+digits, starts with a letter (example: grace64)
+--app Lowercase letters+digits, starts with a letter (example: notes)
+
+Options:
+--dart-package Pub/Dart package name (default: <appName>)
+--display-name Human-readable name (default: Title Case of <appName>)
+--dry-run Print what would change, but don't modify files
+-h, --help Show help
+
+Examples:
+dart run tool/rename_app.dart --developer grace64 --app notes --dry-run
+dart run tool/rename_app.dart --developer grace64 --app notes --display-name "Shadow Notes"
 
 <!--  -->
 <!--  -->

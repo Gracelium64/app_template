@@ -54,16 +54,17 @@ void main(List<String> args) {
     return;
   }
 
-  final planned = <_PlannedChange>[];
+  // Accumulate edits per file so multiple transforms compose safely.
+  final planned = <String, String>{};
 
   void planFileChange(String path, String Function(String text) transform) {
     final file = File(path);
     if (!file.existsSync()) return;
-    final before = file.readAsStringSync();
+
+    final before = planned[path] ?? file.readAsStringSync();
     final after = transform(before);
-    if (before != after) {
-      planned.add(_PlannedChange(path: path, after: after));
-    }
+    if (before == after) return;
+    planned[path] = after;
   }
 
   void planRegexReplace(String path, RegExp pattern, String replacement) {
@@ -76,6 +77,16 @@ void main(List<String> args) {
     RegExp(r'^name:\s*[^\s]+\s*$', multiLine: true),
     'name: $dartPackage',
   );
+  planRegexReplace(
+    'pubspec.yaml',
+    RegExp(r'^description:\s*.*$', multiLine: true),
+    'description: ${jsonEncode(displayName)}',
+  );
+
+  // --- App title (MaterialApp) ---
+  planFileChange('lib/src/app.dart', (text) {
+    return _ensureMaterialAppTitle(text, displayName);
+  });
 
   // --- Dart imports ---
   for (final dartFile in _listFiles(Directory('lib'), endsWith: '.dart')) {
@@ -190,6 +201,10 @@ void main(List<String> args) {
       '<meta name="apple-mobile-web-app-title" content="$displayName">',
     );
     updated = updated.replaceAll(
+      RegExp(r'<meta\s+name="description"\s+content="[^"]*">'),
+      '<meta name="description" content="$displayName">',
+    );
+    updated = updated.replaceAll(
       RegExp(r'<title>[^<]*</title>'),
       '<title>$displayName</title>',
     );
@@ -259,8 +274,8 @@ void main(List<String> args) {
   }
 
   stdout.writeln('Planned changes (${planned.length} files):');
-  for (final change in planned) {
-    stdout.writeln('- ${change.path}');
+  for (final path in planned.keys) {
+    stdout.writeln('- $path');
   }
   if (kotlinMove != null) {
     stdout.writeln('- ${kotlinMove.from} -> ${kotlinMove.to}');
@@ -271,8 +286,8 @@ void main(List<String> args) {
     return;
   }
 
-  for (final change in planned) {
-    File(change.path).writeAsStringSync(change.after);
+  for (final entry in planned.entries) {
+    File(entry.key).writeAsStringSync(entry.value);
   }
   if (kotlinMove != null) {
     _applyKotlinMainActivityMove(kotlinMove);
@@ -364,9 +379,38 @@ String _escapeForWindowsWideString(String value) {
   return value.replaceAll('"', r'\"');
 }
 
+String _ensureMaterialAppTitle(String dartSource, String title) {
+  // If a title is already set, replace it.
+  final titlePattern = RegExp(
+    r'^(\s*)title\s*:\s*([^,\n\r]+)\s*,\s*$',
+    multiLine: true,
+  );
+  if (titlePattern.hasMatch(dartSource)) {
+    return dartSource.replaceAllMapped(titlePattern, (m) {
+      final indent = m.group(1) ?? '';
+      return '$indent'
+          'title: ${jsonEncode(title)},';
+    });
+  }
+
+  // Otherwise, insert after the opening MaterialApp( line.
+  final openPattern = RegExp(
+    r'(return\s+MaterialApp\(\s*\n)(\s*)',
+    multiLine: true,
+  );
+  if (!openPattern.hasMatch(dartSource)) return dartSource;
+
+  return dartSource.replaceFirstMapped(openPattern, (m) {
+    final header = m.group(1) ?? '';
+    final indent = m.group(2) ?? '';
+    return '$header$indent'
+        'title: ${jsonEncode(title)},\n$indent';
+  });
+}
+
 String _replacePlistStringValue(String plistXml, String key, String newValue) {
   final pattern = RegExp(
-    '<key>${RegExp.escape(key)}</key>\s*\n\s*<string>[^<]*</string>',
+    r'<key>${RegExp.escape(key)}</key>\s*\n\s*<string>[^<]*</string>',
     multiLine: true,
   );
   if (!pattern.hasMatch(plistXml)) return plistXml;
@@ -425,13 +469,6 @@ class _KotlinMove {
 
   final String from;
   final String to;
-}
-
-class _PlannedChange {
-  _PlannedChange({required this.path, required this.after});
-
-  final String path;
-  final String after;
 }
 
 class _Options {
@@ -542,7 +579,3 @@ Examples:
 	dart run tool/rename_app.dart --developer grace64 --app notes --display-name "Shadow Notes"
 ''';
 
-          // "description" in pubspec.yaml doesn't change with this, change meunally //
-          // also "title" in app.dart //
-          // also "meta name="apple-mobile-web-app-title" content" in web/index.html //
-          // also "meta name="description" content" in web/index.html //s

@@ -1,5 +1,5 @@
-name: app_template
-description: "A new Flutter project."
+name: test_app
+description: "Test App"
 publish_to: "none"
 version: 0.1.0
 

@@ -1,5 +1,4 @@
-package com.example.app_template
-
+package shadowapp.testdev.test_app
 import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity : FlutterActivity()
