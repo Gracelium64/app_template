@@ -1,5 +1,7 @@
 # ShadowApp Template
 
+Use this repository as a **GitHub Template Repository** to create new Flutter apps that start from this codebase.
+
 <!--  -->
 <!--  -->
 <!--  -->
@@ -30,8 +32,6 @@ dart run tool/rename_app.dart --developer grace64 --app notes --display-name "Sh
 <!--  -->
 <!--  -->
 <!--  -->
-
-Use this repository as a **GitHub Template Repository** to create new Flutter apps that start from this codebase.
 
 ## Create a new app from this template
 
