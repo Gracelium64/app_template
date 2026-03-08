@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:test_app/src/core/extensions/context_mq_extension.dart';
+import 'package:test_app/src/data/databaserepository.dart';
 
 class MainMenu extends StatelessWidget {
-  const MainMenu({super.key});
+  final DataBaseRepository db;
+
+  const MainMenu(this.db, {super.key});
 
   @override
   Widget build(BuildContext context) {
