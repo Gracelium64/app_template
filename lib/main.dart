@@ -9,13 +9,24 @@ import 'package:test_app/src/data/syncrepository.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  var firebaseAvailable = true;
+  try {
+    await Firebase.initializeApp();
+  } catch (_) {
+    // Firebase not configured for this platform/environment. Continue without it.
+    firebaseAvailable = false;
+  }
+
+  final DataBaseRepository? remoteRepo = firebaseAvailable
+      ? FirestoreRepository()
+      : null;
 
   final DataBaseRepository db = SyncRepository(
     local: MockDataRepository(),
-    remote: FirestoreRepository(),
+    remote: remoteRepo,
     secureStorage: FlutterSecureStorage(),
     syncOn: false,
   );
+
   runApp(App(db));
 }

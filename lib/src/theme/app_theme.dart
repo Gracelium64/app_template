@@ -2,6 +2,50 @@ import 'package:test_app/src/theme/palette.dart';
 import 'package:flutter/material.dart';
 
 abstract class AppTheme {
+  static final lightTheme = ThemeData(
+    brightness: Brightness.light,
+    scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: const Color(0xFF111111),
+      brightness: Brightness.light,
+    ),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: Color(0xFFFFFFFF),
+      elevation: 0,
+      toolbarHeight: 60,
+      titleTextStyle: TextStyle(
+        color: Color(0xFF111111),
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
+      iconTheme: IconThemeData(color: Color(0xFF111111)),
+      centerTitle: false,
+      // bottom border
+      shape: Border(bottom: BorderSide(color: Color(0xFFE8E8E8), width: 1)),
+    ),
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(color: Color(0xFF555555)),
+      bodyMedium: TextStyle(color: Color(0xFF555555), fontSize: 14),
+      titleMedium: TextStyle(
+        color: Color(0xFF111111),
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF111111),
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+      ),
+    ),
+    snackBarTheme: const SnackBarThemeData(
+      backgroundColor: Color(0xFF111111),
+      contentTextStyle: TextStyle(color: Colors.white),
+    ),
+    dividerColor: const Color(0xFFE8E8E8),
+  );
   static final darkTheme = ThemeData(
     colorScheme: ColorScheme.fromSeed(
       seedColor: Palette.lightTeal,
